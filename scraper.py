@@ -2,7 +2,22 @@ from bs4 import BeautifulSoup
 import requests
 from datetime import datetime
 import pandas as pd
+import smtplib, ssl
 
+port = 465  # For SSL
+smtp_server = "smtp.gmail.com"
+sender_email = "casestudydeneme@gmail.com"  
+password = ""
+## receiver_email = "your@gmail.com"  # Enter receiver address
+
+## message = """\Subject: Hi there This message is sent from Python."""
+
+context = ssl.create_default_context()
+
+text='''=?utf-8?B?H=C3=ABll=C3=B3?= (RFC2047 encoding)
+MIME-Version: 1.0
+Content-type: multipart/mixed; boundary="fooo"
+....'''
 
 root = 'https://www.sahibinden.com/'
 
@@ -25,8 +40,10 @@ headers = {
 # "price":{
 #     "min":"1",
 #     "max":"10000000"
-# }
-
+# 
+# },
+# "mail": ""
+#
 # }
 def createURL(dict):
     modelURL = (root + dict['marka'] + '-' + dict['model']).replace(' ','-')
@@ -73,15 +90,24 @@ def scrape(dict):
           print("Exception occured: " + str(e))
           continue
 
+    context = ssl.create_default_context()
     
-    return saveData(ilanlar)
+    mail =  dict["mail"]
+    
+    return saveData(ilanlar,mail)
 
 
-def saveData(ilanlar):
+def saveData(ilanlar,mail):
     df = pd.DataFrame(ilanlar, columns = ['konum', 'model','model_yil','km','renk'])
     out = df.to_json(orient='records',force_ascii=False)
     with open('ilanlar.json', 'w') as f:
         f.write(out)
+    
+    print(sender_email, password)
+    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+        server.login(sender_email, password)
+        server.sendmail(sender_email, mail,text + out.encode('ascii','ignore').decode('ascii'))
+    
     return out
 
 if __name__ == "__main__":
