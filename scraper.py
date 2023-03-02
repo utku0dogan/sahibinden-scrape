@@ -8,9 +8,7 @@ port = 465  # For SSL
 smtp_server = "smtp.gmail.com"
 sender_email = "casestudydeneme@gmail.com"  
 password = ""
-## receiver_email = "your@gmail.com"  # Enter receiver address
 
-## message = """\Subject: Hi there This message is sent from Python."""
 
 context = ssl.create_default_context()
 
@@ -28,23 +26,7 @@ headers = {
         'Chrome/39.0.2171.95 Safari/537.36',
         'Upgrade-Insecure-Requests': '1'}
 
-# dict = {
-# "marka": "audi",
-# "model":"a3 a3 hatchback",
-# "il": "istanbul",
-# "vites":"manuel",
-# "yil":{
-#     "max":"2023",
-#     "min": "2000"
-# },
-# "price":{
-#     "min":"1",
-#     "max":"10000000"
-# 
-# },
-# "mail": ""
-#
-# }
+
 def createURL(dict):
     modelURL = (root + dict['marka'] + '-' + dict['model']).replace(' ','-')
     yilquery = 'a5min=' + dict['yil']['min'] + '&' +  'a5max=' + dict['yil']['max']
