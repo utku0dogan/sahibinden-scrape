@@ -112,3 +112,20 @@ def saveData(ilanlar,mail):
 
 if __name__ == "__main__":
 	scrape(dict)
+
+
+# {
+#     "marka": "audi",
+#     "model": "a3 a3 hatchback",
+#     "il": "istanbul",
+#     "vites": "manuel",
+#     "yil": {
+#         "max": "2023",
+#         "min": "2000"
+#     },
+#     "price": {
+#         "min": "1",
+#         "max": "10000000"
+#     },
+#     "mail": "casestudydeneme@gmail.com"
+# }
